@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Strength Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .strength {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        .progress {
+            width: 80%;
+            height: 10px;
+            background-color: #ddd;
+            margin: 10px auto;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s;
+        }
+        .weak { background-color: red; width: 33%; }
+        .medium { background-color: orange; width: 66%; }
+        .strong { background-color: green; width: 100%; }
+    </style>
+</head>
+<body>
+    <h2>Password Strength Checker</h2>
+    <input type="password" id="passwordInput" placeholder="Enter your password...">
+    <div class="strength" id="strengthText">Strength: </div>
+    <div class="progress">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <script>
+        const passwordInput = document.getElementById('passwordInput');
+        const strengthText = document.getElementById('strengthText');
+        const progressBar = document.getElementById('progressBar');
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            let strength = "Weak";
+            let progressClass = "weak";
+            
+            if (password.length >= 6 && /[a-zA-Z]/.test(password) && /[0-9]/.test(password)) {
+                strength = "Medium";
+                progressClass = "medium";
+            }
+            if (password.length > 10 && /[a-zA-Z]/.test(password) && /[0-9]/.test(password) && /[^a-zA-Z0-9]/.test(password)) {
+                strength = "Strong";
+                progressClass = "strong";
+            }
+            
+            strengthText.textContent = `Strength: ${strength}`;
+            progressBar.className = `progress-bar ${progressClass}`;
+        });
+    </script>
+</body>
+</html>
